@@ -37,7 +37,7 @@ Get macOS software updates, update Homebrew, npm, Ruby packages, dotfiles and so
 ### Emacs config setip
 
 ```
-curl -fsSL https://gist.githubusercontent.com/enkhee-Osiris/a9cbf027b587f4d2a0faa8b7a5129c65/raw/73938eb6c4290a51afcb54bf1cb7663a1e95501f/init.el -o ~/.emacs.d/init.e
+curl -fsSL https://gist.github.com/enkhee-Osiris/00ceb922eb3ff82d3ec13bca6b3af664 -o ~/.spacemacs
 ```
 
 ### Local Git identity
