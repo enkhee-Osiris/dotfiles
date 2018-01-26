@@ -52,6 +52,7 @@ npm config set loglevel warn
 # Npm
 npm i -g npm-upgrade
 npm i -g trash-cli
+npm i -g tern
 
 # Python
 brew install python
