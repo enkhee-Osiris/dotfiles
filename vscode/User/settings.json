@@ -1,0 +1,11 @@
+{
+    "vim.disableAnnoyingNeovimMessage": true,
+    "workbench.colorTheme": "Nord",
+    "workbench.iconTheme": "file-icons",
+    "editor.fontFamily": "Source Code Pro",
+    "editor.fontSize": 12,
+    "editor.renderWhitespace": "all",
+    "markdown.preview.scrollEditorWithPreview": true,
+    "extensions.ignoreRecommendations": true,
+    "window.zoomLevel": 0
+}
