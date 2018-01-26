@@ -43,14 +43,14 @@ brew install exiftool
 brew install zsh-syntax-highlighting
 brew install fd
 brew install fzf && $(brew --prefix)/opt/fzf/install
+brew install diff-so-fancy
 
 # Node
-curl -L http://git.io/n-install | bash  # n, Node version manager
+brew install node
 npm config set loglevel warn
 
 # Npm
 npm i -g npm-upgrade
-npm i -g diff-so-fancy
 npm i -g trash-cli
 
 # Python
