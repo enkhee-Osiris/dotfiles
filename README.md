@@ -29,12 +29,11 @@ cd ~/dotfiles/setup
 Now you can run scripts like below.
 
 ```
-osx.sh
-stuff.sh
-spacemacs.sh
-tmux.sh
-zsh.sh
-
+./osx.sh
+./stuff.sh
+./spacemacs.sh
+./tmux.sh
+./zsh.sh
 ```
 
 
