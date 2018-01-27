@@ -55,6 +55,30 @@ git config user.email "enkhee.ag@gmail.com"
 git config user.name "enkhee-Osiris"
 ```
 
+### Installing tmux plugins
+
+As usual, plugins need to be specified in `.tmux.conf`. Run the following
+command to install plugins:
+
+    ~/.tmux/plugins/tpm/bin/install_plugins
+
+### Updating tmux plugins
+
+To update all installed plugins:
+
+    ~/.tmux/plugins/tpm/bin/update_plugins all
+
+or update a single plugin:
+
+    ~/.tmux/plugins/tpm/bin/update_plugins tmux-sensible
+
+### Removing tmux plugins
+
+To remove plugins not on the plugin list:
+
+    ~/.tmux/plugins/tpm/bin/clean_plugins
+
+
 ## Misc
 
 * [OSX Python developer guide](https://gist.github.com/stefanfoulis/902296)
