@@ -28,7 +28,7 @@ cd ~/dotfiles/setup
 ```
 
 Now you can run scripts like below.
-Take a look at [readme](https://github.com/enkhee-osiris/dotfiles/blob/master/tilde/readme.md)
+Take a look at [readme](https://github.com/enkhee-osiris/dotfiles/blob/master/setup/README.md)
 ```
 ./osx.sh
 ./stuff.sh
