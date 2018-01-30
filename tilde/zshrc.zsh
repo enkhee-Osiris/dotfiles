@@ -1,5 +1,6 @@
 # Locale
 export LC_ALL=en_US.UTF-8
+export PROMPT_EOL_MARK=''
 export LANG="en_US"
 
 # Do not overwrite files when redirecting using ">". Note that you can still override this with ">|"
