@@ -84,8 +84,8 @@
 
 # Include local settings
 # Requires Git 1.7.10
-# git config -f ~/.gitlocal user.email "artem@sapegin.ru"
-# git config -f ~/.gitlocal user.name "Artem Sapegin"
+# git config -f ~/.gitlocal user.email "enkhee.ag@gmail.com"
+# git config -f ~/.gitlocal user.name "enkhee-Osiris"
 [include]
 	path = .gitlocal
 
