@@ -127,6 +127,11 @@ _fzf_compgen_dir() {
 }
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+# rbenv bin
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
 # Disable sharing history between terminals enabled by Oh My Zsh
 unsetopt share_history
 
