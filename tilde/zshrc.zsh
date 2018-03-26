@@ -27,6 +27,7 @@ PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:./node_modules/.bin'
 [ -d /usr/local/opt/coreutils/libexec/gnubin ] && _prepend_path "/usr/local/opt/coreutils/libexec/gnubin"
 [ -d ~/dotfiles/bin ] && _prepend_path "$HOME/dotfiles/bin"
 [ -d ~/bin ] && _prepend_path "$HOME/bin"
+[ -d ~/.rbenv/bin ] && _prepend_path "$HOME/.rbenv/bin:$PATH"
 export PATH
 
 # Preferred editor for local and remote sessions
@@ -127,10 +128,8 @@ _fzf_compgen_dir() {
 }
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-# rbenv bin
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# Rbenv
+[ -d ~/.rbenv/bin ] && eval "$(rbenv init -)"
 
 # Disable sharing history between terminals enabled by Oh My Zsh
 unsetopt share_history
