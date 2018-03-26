@@ -28,6 +28,7 @@ PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:./node_modules/.bin'
 [ -d ~/dotfiles/bin ] && _prepend_path "$HOME/dotfiles/bin"
 [ -d ~/bin ] && _prepend_path "$HOME/bin"
 [ -d ~/.rbenv/bin ] && _prepend_path "$HOME/.rbenv/bin:$PATH"
+[ -d /Applications/calibre.app ] && _prepend_path "/Applications/calibre.app/Contents/MacOS"
 export PATH
 
 # Preferred editor for local and remote sessions
