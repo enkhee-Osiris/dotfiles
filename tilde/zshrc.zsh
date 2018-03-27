@@ -29,13 +29,18 @@ PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:./node_modules/.bin'
 [ -d ~/bin ] && _prepend_path "$HOME/bin"
 [ -d ~/.rbenv/bin ] && _prepend_path "$HOME/.rbenv/bin:$PATH"
 [ -d /Applications/calibre.app ] && _prepend_path "/Applications/calibre.app/Contents/MacOS"
+[ -d /Applications/Visual\ Studio\ Code.app ] && _prepend_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
 else
-	export EDITOR='code'
+	if [ -d /Applications/Visual\ Studio\ Code.app ]; then
+		export EDITOR='code'
+	else
+		export EDITOR='emacs'
+	fi
 fi
 
 # Make less the default pager, add some options and enable syntax highlight using source-highlight
@@ -137,3 +142,5 @@ unsetopt share_history
 
 # Load extra (private) settings
 [ -f ~/.zshlocal ] && source ~/.zshlocal
+
+export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
