@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Installs Homebrew, Git, git-extras, git-friendly, hub, Node.js, etc.
+# Installs Homebrew, Git, git-extras, Node.js, python etc.
 
 # Ask for the administrator password upfront
 sudo -v

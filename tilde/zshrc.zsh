@@ -86,9 +86,6 @@ precmd_functions+=(_set_terminal_title)
 # Homebrew install badge: beer sucks, coffee rules
 export HOMEBREW_INSTALL_BADGE='☕'
 
-# Disable bundle for git-friendly
-export GIT_FRIENDLY_NO_BUNDLE=true
-
 # Oh My Zsh
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -110,11 +107,6 @@ ZSH_CUSTOM="$HOME/dotfiles/zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(extract git-extras)
 source $ZSH/oh-my-zsh.sh
-
-# Autocompletion for git-friendly
-fpath=($(brew --prefix)/share/zsh/functions $fpath)
-autoload -Uz _git && _git
-compdef __git_branch_names branch br
 
 # Enable zsh-syntax-highlighting: https://github.com/zsh-users/zsh-syntax-highlighting
 [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
