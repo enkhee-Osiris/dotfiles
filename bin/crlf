@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Find files with Windows line endings (and convert them to Unix in force mode)
-# 
+#
 # Usage:
 #   crlf [file] [--force]
 #
