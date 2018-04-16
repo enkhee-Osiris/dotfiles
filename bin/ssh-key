@@ -6,4 +6,4 @@ if [ ! -f ~/.ssh/id_rsa.pub ]; then
 	ssh-keygen -t rsa
 fi
 
-cat "$file"
+cat ~/.ssh/id_rsa.pub
