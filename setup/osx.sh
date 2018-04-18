@@ -496,7 +496,7 @@ defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
-hash tmutil &> /dev/null && sudo tmutil disablelocal
+hash tmutil &> /dev/null && sudo tmutil disable
 
 ###############################################################################
 # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
@@ -554,7 +554,8 @@ sudo pmset -b lessbright 1
 sudo pmset -b halfdim 1
 
 # Restart automatically if the computer freezes
-sudo pmset -b panicrestart 15
+# panicrestart is missing high sierra
+# sudo pmset -b panicrestart 15
 
 # Power Adapter
 
@@ -577,7 +578,7 @@ sudo pmset -c halfdim 1
 sudo pmset -c autorestart 1
 
 # Restart automatically if the computer freezes
-sudo pmset -c panicrestart 20
+# sudo pmset -c panicrestart 20
 
 ###############################################################################
 # Kill affected applications                                                  #
