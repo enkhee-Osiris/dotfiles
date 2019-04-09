@@ -103,6 +103,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[user]
-	email = enkhee.ag@gmail.com
-	name = enkhee-Osiris

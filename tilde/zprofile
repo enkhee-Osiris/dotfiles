@@ -1,0 +1,32 @@
+# Prepend $PATH without duplicates
+function _prepend_path() {
+	if ! $( echo "$PATH" | tr ":" "\n" | grep -qx "$1" ) ; then
+		PATH="$1:$PATH"
+	fi
+}
+
+PATH='/usr/bin:/bin:/usr/sbin:/sbin'
+[ -d /usr/local/bin ] && _prepend_path "/usr/local/bin"
+[ -d /usr/local/opt/ruby/bin ] && _prepend_path "/usr/local/opt/ruby/bin"
+[ -d /usr/local/opt/coreutils/libexec/gnubin ] && _prepend_path "/usr/local/opt/coreutils/libexec/gnubin"
+[ -d $HOME/dotfiles/bin ] && _prepend_path "$HOME/dotfiles/bin"
+[ -d $HOME/bin ] && _prepend_path "$HOME/bin"
+[ -d /Applications/calibre.app ] && _prepend_path "/Applications/calibre.app/Contents/MacOS"
+[ -d /Applications/Visual\ Studio\ Code.app ] && _prepend_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH
+
+if [[ -d $HOME/.node_modules ]]; then
+  PATH="$HOME/.node_modules/bin:$PATH"
+  export npm_config_prefix=$HOME/.node_modules
+fi
+
+if [[ -d $HOME/Android/Sdk ]]; then
+  export ANDROID_HOME=$HOME/Android/Sdk
+  [ -d $ANDROID_HOME/tools ] && PATH=$PATH:$ANDROID_HOME/tools
+  [ -d $ANDROID_HOME/tools/bin ] && PATH=$PATH:$ANDROID_HOME/tools/bin
+  [ -d $ANDROID_HOME/platform-tools ] && PATH=$PATH:$ANDROID_HOME/platform-tools
+  [ -d $ANDROID_HOME/emulator ] && PATH=$PATH:$ANDROID_HOME/emulator
+  if [[ -d $ANDROID_HOME/opencv ]]; then
+    export OpenCV_ANDROID_HOME=$HOME/Android/Sdk/opencv
+  fi
+fi
