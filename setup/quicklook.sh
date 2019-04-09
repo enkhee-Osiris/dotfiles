@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Installs quick look plugins: qlImageSize
 
 # qlImageSize

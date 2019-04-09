@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Installs Homebrew, Git, git-extras, Node.js, python etc.
 
 # Ask for the administrator password upfront
@@ -60,11 +62,7 @@ brew install python
 # Emacs install with brew
 brew tap d12frosted/emacs-plus
 brew install emacs-plus
-brew linkapps emacs-plus
-
-# Postgres
-brew install postgresql
-pg_ctl -D /usr/local/var/postgres start && brew services start postgresql
+ln -s /usr/local/Cellar/emacs-plus/*/Emacs.app/ /Applications/
 
 # Remove outdated versions from the cellar
 brew cleanup

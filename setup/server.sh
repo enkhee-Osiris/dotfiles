@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Configures Apache (macOS), PHP (macOS) and MySQL (Homebrew).
 
 # Require Homebrew
@@ -7,6 +9,10 @@ command -v brew >/dev/null 2>&1 || { echo >&2 "Please install Homebrew first."; 
 
 # Ask for the administrator password upfront
 sudo -v
+
+# Postgres
+brew install postgresql
+pg_ctl -D /usr/local/var/postgres start && brew services start postgresql
 
 # MySQL
 brew install mysql
@@ -17,7 +23,7 @@ mysql.server start
 
 # PHP
 cd /etc
-sudo cp php.ini.default php.ini 
+sudo cp php.ini.default php.ini
 sudo sed -i '' "s^mysql.default_socket =^mysql.default_socket = /tmp/mysql.sock^" php.ini
 sudo sed -i '' "s^;date.timezone =^date.timezone = Europe/Moscow^" php.ini
 sudo sed -i '' "s^;extension=php_sqlite3.dll^extension=php_sqlite3.dll^" php.ini

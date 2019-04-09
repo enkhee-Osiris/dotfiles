@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Sane OSX defaults
 # ~/.osx — http://mths.be/osx
 
@@ -563,7 +565,7 @@ sudo pmset -b halfdim 1
 sudo pmset -c sleep 30
 
 # Display sleep: 10 min
-sudo mset -c displaysleep 10
+sudo pmset -c displaysleep 10
 
 # Put the hard disk(s) to sleep when possible: 10 min
 sudo pmset -c disksleep 10

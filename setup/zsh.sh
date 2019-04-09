@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Installs zsh and Oh My Zsh, registers zsh as a default shell
 
 # zsh
