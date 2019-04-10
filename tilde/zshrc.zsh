@@ -32,14 +32,15 @@ ZSH_THEME="fishy"
 # ZSH_CUSTOM="$HOME/dotfiles/zsh"
 
 # Dircolors NORD
-eval $(dircolors $HOME/.dir_colors)
+# eval $(dircolors $HOME/.dir_colors)
 
 # Zprofile
 [ -f $HOME/.zprofile ] && source $HOME/.zprofile
 
+ZSH_CUSTOM="$HOME/dotfiles/zsh"
 # Plugins (see ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(common-aliases extract git-extras git zsh-syntax-highlighting python yarn vi-mode fzf pass)
+plugins=(common-aliases extract git-extras git python yarn vi-mode fzf pass)
 # source /usr/share/fzf/key-bindings.zsh
 # source /usr/share/fzf/completion.zsh
 source $ZSH/oh-my-zsh.sh

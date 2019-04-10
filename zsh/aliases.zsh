@@ -39,15 +39,6 @@ alias replace="replace --exclude='node_modules'"
 # Run npm script without annoying noise
 alias nr="npm run --silent"
 
-# Ban npm if project uses Yarn
-npm() {
-	if [ -f "yarn.lock" ]; then
-		echo "$(tput sgr 0 1)$(tput setaf 1)You should use Yarn for this project.$(tput sgr0)"
-		return
-	fi
-	command npm $@
-}
-
 # `cd` to Git repo root
 alias gr='git rev-parse 2>/dev/null && cd "./$(git rev-parse --show-cdup)"'
 
