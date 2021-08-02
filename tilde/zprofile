@@ -2,7 +2,7 @@ if [[ -d /usr/local/bin ]]; then
   PATH="/usr/local/bin:$PATH"
 fi
 
-if [[ -f /usr/bin/npm ]]; then
+if [[ -f /usr/local/bin/npm ]]; then
   export npm_config_prefix=$HOME/.node_modules
 
   if [[ -d $HOME/.node_modules ]]

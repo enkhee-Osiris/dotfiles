@@ -20,10 +20,6 @@ Sane OSX defaults. Based on [~/.osx](https://github.com/mathiasbynens/dotfiles/b
 
 Installs quick look plugins: qlImageSize.
 
-### spacemacs
-
-Installs spacemacs.
-
 ### Tmux
 
 Install tmux with plugins

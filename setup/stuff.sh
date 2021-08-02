@@ -30,6 +30,7 @@ brew install homebrew/dupes/grep
 # Git
 brew install git
 brew install git-extras
+brew install git-delta
 
 # Extend global $PATH
 echo -e "setenv PATH $HOME/dotfiles/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" | sudo tee /etc/launchd.conf
@@ -42,10 +43,9 @@ brew install ack
 brew install the_silver_searcher
 brew install gist
 brew install exiftool
-brew install zsh-syntax-highlighting
 brew install fd
+brew install ripgrep
 brew install fzf && $(brew --prefix)/opt/fzf/install
-brew install diff-so-fancy
 
 # Node
 brew install node
