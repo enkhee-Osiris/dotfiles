@@ -56,6 +56,7 @@ plugins=(
   python
   docker
   docker-compose
+  zsh-aliases-exa
 )
 
 source $ZSH/oh-my-zsh.sh
