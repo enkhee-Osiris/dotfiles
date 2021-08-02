@@ -1,29 +1,36 @@
-# Prepend $PATH without duplicates
-function _prepend_path() {
-	if ! $( echo "$PATH" | tr ":" "\n" | grep -qx "$1" ) ; then
-		PATH="$1:$PATH"
-	fi
-}
+if [[ -d /usr/local/bin ]]; then
+  PATH="/usr/local/bin:$PATH"
+fi
 
-PATH='/usr/bin:/bin:/usr/sbin:/sbin'
-[ -d /usr/local/bin ] && _prepend_path "/usr/local/bin"
-[ -d /usr/local/opt/ruby/bin ] && _prepend_path "/usr/local/opt/ruby/bin"
-[ -d /usr/local/opt/coreutils/libexec/gnubin ] && _prepend_path "/usr/local/opt/coreutils/libexec/gnubin"
-[ -d $HOME/dotfiles/bin ] && _prepend_path "$HOME/dotfiles/bin"
-[ -d $HOME/bin ] && _prepend_path "$HOME/bin"
-[ -d /Applications/calibre.app ] && _prepend_path "/Applications/calibre.app/Contents/MacOS"
-[ -d /Applications/Visual\ Studio\ Code.app ] && _prepend_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-export PATH
-
-if [[ -d $HOME/.node_modules ]]; then
-  PATH="$HOME/.node_modules/bin:$PATH"
+if [[ -f /usr/bin/npm ]]; then
   export npm_config_prefix=$HOME/.node_modules
+
+  if [[ -d $HOME/.node_modules ]]
+  then
+    PATH="$HOME/.node_modules/bin:$PATH"
+  else
+    mkdir -p "$HOME/.node_modules"
+    PATH="$HOME/.node_modules/bin:$PATH"
+    export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
+  fi
+fi
+
+if [[ -d $HOME/.yarn ]]; then
+  PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+
+if [[ -d /usr/local/opt/coreutils/libexec/gnubin ]]; then
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
+if [[ -d $HOME/dotfiles/bin ]]; then
+  PATH="$HOME/dotfiles/bin:$PATH"
 fi
 
 if [[ -d $HOME/Android/Sdk ]]; then
   export ANDROID_HOME=$HOME/Android/Sdk
-  [ -d $ANDROID_HOME/tools ] && PATH=$PATH:$ANDROID_HOME/tools
-  [ -d $ANDROID_HOME/tools/bin ] && PATH=$PATH:$ANDROID_HOME/tools/bin
+  # [ -d $ANDROID_HOME/tools ] && PATH=$PATH:$ANDROID_HOME/tools
+  # [ -d $ANDROID_HOME/tools/bin ] && PATH=$PATH:$ANDROID_HOME/tools/bin
   [ -d $ANDROID_HOME/platform-tools ] && PATH=$PATH:$ANDROID_HOME/platform-tools
   [ -d $ANDROID_HOME/emulator ] && PATH=$PATH:$ANDROID_HOME/emulator
   if [[ -d $HOME/Android/ndk ]]; then
@@ -36,4 +43,16 @@ if [[ -d $HOME/Android/Sdk ]]; then
   fi
 fi
 
-[ -d $HOME/.emacs.d/bin ] && _prepend_path "$HOME/.emacs.d/bin"
+if [[ -d /Applications/calibre.app ]]; then
+  PATH="/Applications/calibre.app/Contents/MacOS:$PATH"
+fi
+
+if [[ -d /Applications/Visual\ Studio\ Code.app ]]; then
+  PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+fi
+
+if [[ -d $HOME/.emacs.d/bin ]]; then
+  PATH="$HOME/.emacs.d/bin:$PATH"
+fi
+
+export PATH="$PATH"
