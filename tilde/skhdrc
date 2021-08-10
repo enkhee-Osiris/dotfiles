@@ -158,9 +158,9 @@ alt - s : yabai -m window --toggle sticky
 alt - o : yabai -m window --toggle topmost
 
 # toggle sticky, topmost and resize to picture-in-picture size
-alt - p : yabai -m window --toggle sticky;\
-          yabai -m window --toggle topmost;\
-          yabai -m window --grid 5:5:4:0:1:1
+# alt - p : yabai -m window --toggle sticky;\
+#           yabai -m window --toggle topmost;\
+#           yabai -m window --grid 5:5:4:0:1:1
 
 # change layout of desktop
 ctrl + alt - a : yabai -m space --layout bsp
