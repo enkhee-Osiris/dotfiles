@@ -59,7 +59,9 @@
   (setq-hook! 'rjsx-mode-hook +format-with-lsp nil))
 
 (after! typescript-mode
-  (setq lsp-clients-typescript-tls-path "/home/osiris/.node_modules/bin/typescript-language-server"))
+  (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
+  (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
+  (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server"))
 
 ;; (after! css-mode
 ;;   (add-hook 'scss-mode-local-vars-hook
