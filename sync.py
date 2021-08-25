@@ -14,8 +14,9 @@ SOURCE_DIR = '~/dotfiles/tilde'
 EXCLUDE = []
 NO_DOT_PREFIX = []
 PRESERVE_EXTENSION = [
-  'tmux.conf',
-  'doom.d'
+	'tmux.conf',
+	'doom.d',
+	'kitty.d'
 ]
 
 

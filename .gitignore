@@ -2,3 +2,6 @@
 Thumbs.db
 .idea/
 .vscode/
+
+tilde/config/*
+!tilde/config/kitty
