@@ -69,6 +69,7 @@
 [user]
 	email = enkhee.ag@gmail.com
 	name = enkhee-Osiris
+	signingkey = enkhee.ag@gmail.com
 
 [pager]
   diff = delta
@@ -88,3 +89,7 @@
   file-style = bold yellow ul
   file-decoration-style = none
 	ui = auto
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[commit]
+	gpgsign = true
