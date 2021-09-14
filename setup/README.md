@@ -20,6 +20,10 @@ Sane OSX defaults. Based on [~/.osx](https://github.com/mathiasbynens/dotfiles/b
 
 Installs quick look plugins: qlImageSize.
 
+### Spotify
+
+Installs spicetify
+
 ### Tmux
 
 Install tmux with plugins
