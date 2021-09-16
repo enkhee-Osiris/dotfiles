@@ -23,6 +23,7 @@
                 (flycheck-select-checker 'javascript-eslint)))))
 
 (after! rjsx-mode
+  (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
   (after! lsp-mode (lsp-ignore-node-files)))
 
 ;; (after! rjsx-mode
@@ -38,8 +39,8 @@
   (seq-do #'(lambda (drct) (add-to-list 'lsp-file-watch-ignored-directories drct)) '("[/\\\\]\\.next\\'" "[/\\\\]\\.husky\\'" "[/\\\\]\\.log\\'")))
 
 (after! typescript-mode
-  ;; (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
-  ;; (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
+  (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
+  (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
   ;; (add-hook 'typescript-tsx--mode-local-vars-hook #'ts-flycheck-setup 'append)
   (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server")
   (after! lsp-mode (lsp-ignore-node-files)))
