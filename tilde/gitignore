@@ -34,3 +34,5 @@ yarn-error.log
 # projectile dotfile
 .project
 
+# editor config
+.editorconfig
