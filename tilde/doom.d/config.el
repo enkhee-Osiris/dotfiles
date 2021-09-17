@@ -24,16 +24,9 @@
 
 (after! rjsx-mode
   (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
-  (after! lsp-mode (lsp-ignore-node-files)))
-
-;; (after! rjsx-mode
-;;   (setq-hook! 'rjsx-mode-hook flycheck-checker 'javascript-eslint)
-;;   (setq-hook! 'rjsx-mode-hook +format-with-lsp nil))
-
-;; (defun ts-flycheck-setup ()
-;;   (setq lsp-disagnostics-provider :none)
-;;   (flycheck-add-next-checker 'javascript-eslint 'lsp)
-;;   (flycheck-select-checker 'javascript-eslint))
+  (after! lsp-mode (lsp-ignore-node-files))
+  (add-hook! 'rjsx-mode-hook
+    (add-hook 'before-save-hook 'lsp-format-buffer)))
 
 (defun lsp-ignore-node-files ()
   (seq-do #'(lambda (drct) (add-to-list 'lsp-file-watch-ignored-directories drct)) '("[/\\\\]\\.next\\'" "[/\\\\]\\.husky\\'" "[/\\\\]\\.log\\'")))
@@ -43,7 +36,11 @@
   (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
   ;; (add-hook 'typescript-tsx--mode-local-vars-hook #'ts-flycheck-setup 'append)
   (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server")
-  (after! lsp-mode (lsp-ignore-node-files)))
+  (after! lsp-mode (lsp-ignore-node-files))
+  (add-hook! 'typescript-mode-hook
+    (add-hook 'before-save-hook 'lsp-format-buffer))
+  (add-hook! 'typescript-tsx-mode-hook
+    (add-hook 'before-save-hook 'lsp-format-buffer)))
 
 (after! rustic
   (setq rustic-format-on-save t)
