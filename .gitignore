@@ -5,3 +5,4 @@ Thumbs.db
 
 tilde/config/*
 !tilde/config/kitty
+!tilde/config/raycast
