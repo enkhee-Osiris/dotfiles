@@ -6,3 +6,7 @@ Thumbs.db
 tilde/config/*
 !tilde/config/kitty
 !tilde/config/raycast
+
+!tilde/config/spicetify
+tilde/config/spicetify/Backup
+tilde/config/spicetify/Extracted
