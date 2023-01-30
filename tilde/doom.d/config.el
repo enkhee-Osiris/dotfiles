@@ -22,25 +22,18 @@
               (when (flycheck-may-enable-checker 'javascript-eslint)
                 (flycheck-select-checker 'javascript-eslint)))))
 
-(after! rjsx-mode
-  (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
-  (after! lsp-mode (lsp-ignore-node-files))
-  (add-hook! 'rjsx-mode-hook
-    (add-hook 'before-save-hook 'lsp-format-buffer)))
-
 (defun lsp-ignore-node-files ()
-  (seq-do #'(lambda (drct) (add-to-list 'lsp-file-watch-ignored-directories drct)) '("[/\\\\]\\.next\\'" "[/\\\\]\\.husky\\'" "[/\\\\]\\.log\\'")))
+  (seq-do #'(lambda (drct) (add-to-list 'lsp-file-watch-ignored-directories drct)) '("[/\\\\]\\out\\'" "[/\\\\]\\_next\\'" "[/\\\\]\\.next\\'" "[/\\\\]\\.husky\\'" "[/\\\\]\\.log\\'")))
+
+(after! rjsx-mode
+  (after! lsp-mode (lsp-ignore-node-files))
+  (setq-hook! 'rjsx-mode-hook +format-with-lsp nil))
 
 (after! typescript-mode
   (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
   (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
-  ;; (add-hook 'typescript-tsx--mode-local-vars-hook #'ts-flycheck-setup 'append)
-  (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server")
-  (after! lsp-mode (lsp-ignore-node-files))
-  (add-hook! 'typescript-mode-hook
-    (add-hook 'before-save-hook 'lsp-format-buffer))
-  (add-hook! 'typescript-tsx-mode-hook
-    (add-hook 'before-save-hook 'lsp-format-buffer)))
+  (setq lsp-clients-typescript-tls-path "/home/osiris/.node_modules/bin/typescript-language-server")
+  (after! lsp-mode (lsp-ignore-node-files)))
 
 (after! rustic
   (setq rustic-format-on-save t)
@@ -49,10 +42,14 @@
 (setq doom-font (font-spec :family "Fira Mono" :size 14)
       doom-variable-pitch-font (font-spec :family "Fira Sans")
       doom-unicode-font (font-spec :family "DejaVu Sans Mono")
-      doom-big-font (font-spec :family "Fira Mono" :size 21))
-
-;; relative line numbers by default
-(setq display-line-numbers-type 'relative)
+      doom-big-font (font-spec :family "Fira Mono" :size 21)
+      ;; theme
+      doom-theme 'doom-vibrant
+      projectile-project-search-path '("~/Work/")
+      ;; relative line numbers by default
+      display-line-numbers-type 'relative
+      user-full-name "Enkh-Erdene Bolormaa"
+      user-mail-address "enkhee.ag@gmail.com")
 
 (map! :map +rust-keymap
       "TAB" #'company-indent-or-complete-common
@@ -65,5 +62,10 @@
        "f" #'racer-find-definition-other-frame
        "w" #'racer-find-definition-other-window))
 
-(setq lsp-tailwindcss-add-on-mode t)
-(use-package! lsp-tailwindcss)
+;; (use-package! lsp-tailwindcss)
+;; (setq lsp-tailwindcss-major-modes '(rjsx-mode web-mode html-mode css-mode typescript-mode typescript-tsx-mode)
+;;       lsp-tailwindcss-add-on-mode t)
+
+(use-package lsp-tailwindcss
+  :init
+  (setq lsp-tailwindcss-add-on-mode t))

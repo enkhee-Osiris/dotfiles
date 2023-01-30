@@ -1,12 +1,6 @@
 [color]
 	ui = auto
 
-[color "diff"]
-	meta = blue
-	frag = white
-	old = red bold
-	new = green bold
-
 [core]
 	editor = vim
 	autocrlf = false
@@ -59,6 +53,13 @@
 [url "git@github.com:enkhee-Osiris/"]
 	insteadOf = "git://github.com/enkhee-Osiris/"
 
+# https://github.com/so-fancy/diff-so-fancy
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
 # Include local settings
 # Requires Git 1.7.10
 # git config -f ~/.gitlocal user.email "enkhee.ag@gmail.com"
@@ -66,30 +67,41 @@
 [include]
 	path = .gitlocal
 
+# Some random bullshit that always appers at the end of the config file
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
 [user]
 	email = enkhee.ag@gmail.com
 	name = enkhee-Osiris
-	signingkey = enkhee.ag@gmail.com
 
 [pager]
-  diff = delta
-  log = delta
-  reflog = delta
-  show = delta
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
 
 [interactive]
-  diffFilter = delta --color-only
+    diffFilter = delta --color-only
 
 [delta]
-  features = side-by-side line-numbers decorations
-  whitespace-error-style = 22 reverse
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
 
 [delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  file-style = bold yellow ul
-  file-decoration-style = none
-	ui = auto
-[gpg]
-	program = /opt/homebrew/bin/gpg
-[commit]
-	gpgsign = true
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none

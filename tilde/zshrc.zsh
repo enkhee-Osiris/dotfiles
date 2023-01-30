@@ -5,6 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
 # Locale
 export LC_ALL=en_US.UTF-8
 export PROMPT_EOL_MARK=''
@@ -52,7 +54,6 @@ plugins=(
   fzf
   pass
   rust
-  cargo
   python
   docker
   docker-compose
