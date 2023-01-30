@@ -36,7 +36,10 @@ brew install git-delta
 echo -e "setenv PATH $HOME/dotfiles/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" | sudo tee /etc/launchd.conf
 
 # Install source code pro font
-brew tap caskroom/fonts && brew cask install font-source-code-pro
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code
+brew install --cask font-fira-sans
+brew install --cask font-dejavu
 
 # Everything else
 brew install ack
