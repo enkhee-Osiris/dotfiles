@@ -146,10 +146,11 @@ sudo chmod 444 /private/var/db/.AccessibilityAPIEnabled
 # defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 # Disable press-and-hold for keys in favor of key repeat
-#defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Don't illuminate built-in MacBook keyboard in low light
 defaults write com.apple.BezelServices kDim -bool false
@@ -383,7 +384,7 @@ defaults write -g WebContinuousSpellCheckingEnabled -boolean true
 /usr/libexec/PlistBuddy "$HOME/Library/Preferences/com.apple.symbolichotkeys.plist" -c 'Add AppleSymbolicHotKeys:65:enabled bool false'
 
 # Remove Spotlight from menu bar
-sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+# sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 
 # Disable Notification Center
 #launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist
