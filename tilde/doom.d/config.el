@@ -32,19 +32,18 @@
 (after! typescript-mode
   (setq-hook! 'typescript-mode-hook +format-with-lsp nil)
   (setq-hook! 'typescript-tsx-mode-hook +format-with-lsp nil)
-  (setq lsp-clients-typescript-tls-path "/home/osiris/.node_modules/bin/typescript-language-server")
+  (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server")
   (after! lsp-mode (lsp-ignore-node-files)))
 
 (after! rustic
   (setq rustic-format-on-save t)
   (setq-hook! 'rustic-mode-hook +format-with 'rustfmt))
 
-;; (setq doom-font (font-spec :family "Fira Mono" :size 14)
-;;       doom-variable-pitch-font (font-spec :family "Fira Sans")
-;;       doom-unicode-font (font-spec :family "DejaVu Sans Mono")
-;;       doom-big-font (font-spec :family "Fira Mono" :size 21)
+(setq doom-font (font-spec :family "Fira Mono" :size 14)
+      doom-variable-pitch-font (font-spec :family "Fira Sans")
+      doom-big-font (font-spec :family "Fira Mono" :size 21)
       ;; theme
-(setq doom-theme 'doom-vibrant
+      doom-theme 'doom-vibrant
       projectile-project-search-path '("~/Work/")
       ;; relative line numbers by default
       display-line-numbers-type 'relative
@@ -62,10 +61,19 @@
        "f" #'racer-find-definition-other-frame
        "w" #'racer-find-definition-other-window))
 
-;; (use-package! lsp-tailwindcss)
-;; (setq lsp-tailwindcss-major-modes '(rjsx-mode web-mode html-mode css-mode typescript-mode typescript-tsx-mode)
-;;       lsp-tailwindcss-add-on-mode t)
+(use-package! lsp-tailwindcss)
+(setq lsp-tailwindcss-major-modes '(rjsx-mode web-mode html-mode css-mode typescript-mode typescript-tsx-mode)
+      lsp-tailwindcss-add-on-mode t)
 
-(use-package lsp-tailwindcss
-  :init
-  (setq lsp-tailwindcss-add-on-mode t))
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         :map copilot-completion-map
+         ("<tab>" . 'copilot-accept-completion)
+         ("TAB" . 'copilot-accept-completion)))
+
+(use-package! "bicep-mode" :load-path "/Users/osiris/.config/bicep-mode")
+(use-package! "lsp-tailwindcss" :load-path "/Users/osiris/.config/lsp-tailwindcss")
+(use-package! "prisma-mode" :load-path "/Users/osiris/.config/emacs-prisma-mode")
