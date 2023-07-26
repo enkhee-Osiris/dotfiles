@@ -39,12 +39,12 @@
   (setq rustic-format-on-save t)
   (setq-hook! 'rustic-mode-hook +format-with 'rustfmt))
 
-(setq doom-font (font-spec :family "Fira Mono" :size 14)
-      doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "DejaVu Sans Mono")
-      doom-big-font (font-spec :family "Fira Mono" :size 21)
+;; (setq doom-font (font-spec :family "Fira Mono" :size 14)
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans")
+;;       doom-unicode-font (font-spec :family "DejaVu Sans Mono")
+;;       doom-big-font (font-spec :family "Fira Mono" :size 21)
       ;; theme
-      doom-theme 'doom-vibrant
+(setq doom-theme 'doom-vibrant
       projectile-project-search-path '("~/Work/")
       ;; relative line numbers by default
       display-line-numbers-type 'relative
