@@ -59,4 +59,40 @@ if [[ -d $HOME/.emacs.d/bin ]]; then
   PATH="$HOME/.emacs.d/bin:$PATH"
 fi
 
+if [[ -d /opt/homebrew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  if [[ -d /opt/homebrew/opt/chruby ]]; then
+    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+    source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+    chruby ruby-3.2.1
+
+    PATH="$HOME/.gem/ruby/3.2.1/bin:$PATH"
+    PATH="$HOME/.rubies/ruby-3.2.1/lib/ruby/gems/3.2.0/bin:$PATH"
+    PATH="$HOME/.rubies/ruby-3.2.1/bin:$PATH"
+  fi
+
+  if [[ -d /opt/homebrew/opt/openjdk ]]; then
+    PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+    export JAVA_HOME="/opt/homebrew/opt/openjdk"
+    export JDK_HOME="/opt/homebrew/opt/openjdk"
+    export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+  fi
+fi
+
+if [[ -d $HOME/Library/pnpm ]]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+  PATH="$PNPM_HOME:$PATH"
+fi
+
+if [[ -d $HOME/.android ]]; then
+  export ANDROID_USER_HOME="$HOME/.android"
+  export ANDROID_AVD_HOME="$HOME/.android/avd"
+fi
+
+if [[ -d $HOME/Library/Android/sdk ]]; then
+  export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
+fi
+
 export PATH="$PATH"

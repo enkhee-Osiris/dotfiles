@@ -26,7 +26,7 @@ yarn-error.log
 .rubymine_helpers
 
 # Vscode
-.vscode
+# .vscode
 
 # npm project logs
 .log
@@ -35,7 +35,7 @@ yarn-error.log
 .project
 
 # editor config
-.editorconfig
+# .editorconfig
 
 # language server
 .log/
