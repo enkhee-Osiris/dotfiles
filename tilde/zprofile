@@ -6,11 +6,35 @@ if [[ -d /opt/homebrew/bin ]]; then
   PATH="/opt/homebrew/bin:$PATH"
 fi
 
-if [[ -f /usr/local/bin/npm ]] || [[ -f /opt/homebrew/bin/node ]]; then
-  export npm_config_prefix=$HOME/.node_modules
+if [[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ]]; then
+  PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+fi
 
-  if [[ -d $HOME/.node_modules ]]
-  then
+if [[ -d /opt/homebrew/opt/findutils/libexec/gnubin ]]; then
+  PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+fi
+
+# if [[ -f /usr/local/bin/npm ]] || [[ -f /opt/homebrew/bin/node ]]; then
+#   export npm_config_prefix=$HOME/.node_modules
+# 
+#   if [[ -d $HOME/.node_modules ]]
+#   then
+#     PATH="$HOME/.node_modules/bin:$PATH"
+#   else
+#     mkdir -p "$HOME/.node_modules"
+#     PATH="$HOME/.node_modules/bin:$PATH"
+#     export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
+#   fi
+# fi
+
+if [[ -d /opt/homebrew/opt/node@20 ]]; then
+  PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+
+  export npm_config_prefix=$HOME/.node_modules
+  export LDFLAGS="-L/opt/homebrew/opt/node@20/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/node@20/include"
+
+  if [[ -d $HOME/.node_modules ]]; then
     PATH="$HOME/.node_modules/bin:$PATH"
   else
     mkdir -p "$HOME/.node_modules"
@@ -21,10 +45,6 @@ fi
 
 if [[ -d $HOME/.yarn ]]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-
-if [[ -d /usr/local/opt/coreutils/libexec/gnubin ]]; then
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
 if [[ -d $HOME/dotfiles/bin ]]; then
@@ -55,12 +75,17 @@ if [[ -d /Applications/Visual\ Studio\ Code.app ]]; then
   PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 fi
 
-if [[ -d $HOME/.emacs.d/bin ]]; then
-  PATH="$HOME/.emacs.d/bin:$PATH"
+if [[ -d $HOME/.config/emacs/bin ]]; then
+  PATH="$HOME/.config/emacs/bin:$PATH"
 fi
 
 if [[ -d /opt/homebrew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  if [[ -d /opt/homebrew/opt/python3 ]]; then
+    PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
+    PATH="/opt/homebrew/bin/python3:$PATH"
+  fi
 
   if [[ -d /opt/homebrew/opt/chruby ]]; then
     source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
@@ -72,12 +97,12 @@ if [[ -d /opt/homebrew ]]; then
     PATH="$HOME/.rubies/ruby-3.2.1/bin:$PATH"
   fi
 
-  if [[ -d /opt/homebrew/opt/openjdk ]]; then
-    PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+  if [[ -d /opt/homebrew/opt/openjdk@17 ]]; then
+    PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 
-    export JAVA_HOME="/opt/homebrew/opt/openjdk"
-    export JDK_HOME="/opt/homebrew/opt/openjdk"
-    export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+    export JDK_HOME="/opt/homebrew/opt/openjdk@17"
+    export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
   fi
 fi
 
@@ -92,7 +117,15 @@ if [[ -d $HOME/.android ]]; then
 fi
 
 if [[ -d $HOME/Library/Android/sdk ]]; then
-  export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
+  # export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
+  # export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
 fi
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-sdk/completion.zsh.inc'; fi
 
 export PATH="$PATH"
