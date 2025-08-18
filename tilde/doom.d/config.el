@@ -35,6 +35,8 @@
   (setq lsp-clients-typescript-tls-path "/Users/osiris/.node_modules/bin/typescript-language-server")
   (after! lsp-mode (lsp-ignore-node-files)))
 
+(setq package-install-upgrade-built-in t)
+
 (after! rustic
   (setq rustic-format-on-save t)
   (setq-hook! 'rustic-mode-hook +format-with 'rustfmt))
@@ -57,23 +59,38 @@
 (map! :localleader
       :map +rust-keymap
       (:prefix ("r" . "racer")
-       "d" #'racer-find-definition
-       "f" #'racer-find-definition-other-frame
-       "w" #'racer-find-definition-other-window))
+               "d" #'racer-find-definition
+               "f" #'racer-find-definition-other-frame
+               "w" #'racer-find-definition-other-window))
 
 (use-package! lsp-tailwindcss)
 (setq lsp-tailwindcss-major-modes '(rjsx-mode web-mode html-mode css-mode typescript-mode typescript-tsx-mode)
       lsp-tailwindcss-add-on-mode t)
 
-;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
-  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-         ("C-<tab>" . 'copilot-accept-completion-by-word)
-         :map copilot-completion-map
-         ("<tab>" . 'copilot-accept-completion)
-         ("TAB" . 'copilot-accept-completion)))
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
+(after! (evil copilot)
+  ;; Define the custom function that either accepts the completion or does the default behavior
+  (defun my/copilot-tab-or-default ()
+    (interactive)
+    (if (and (bound-and-true-p copilot-mode)
+             ;; Add any other conditions to check for active copilot suggestions if necessary
+             )
+        (copilot-accept-completion)
+      (evil-insert 1))) ; Default action to insert a tab. Adjust as needed.
+
+  ;; Bind the custom function to <tab> in Evil's insert state
+  (evil-define-key 'insert 'global (kbd "<tab>") 'my/copilot-tab-or-default)
+  (setq copilot-node-executable "/opt/homebrew/opt/node@20/bin/node")
+)
+
+;; accept completion from copilot and fallback to company
 (use-package! "bicep-mode" :load-path "/Users/osiris/.config/bicep-mode")
 (use-package! "lsp-tailwindcss" :load-path "/Users/osiris/.config/lsp-tailwindcss")
-(use-package! "prisma-mode" :load-path "/Users/osiris/.config/emacs-prisma-mode")
+;; (use-package! "prisma-mode" :load-path "/Users/osiris/.config/emacs-prisma-mode")
