@@ -127,17 +127,14 @@
 
 ;; Enhanced Flycheck configuration for Astro
 (after! flycheck
-  ;; Enable ESLint for various modes including Astro
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (flycheck-add-mode 'javascript-eslint 'astro-ts-mode)
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (flycheck-add-mode 'javascript-eslint 'js-mode)
-  (flycheck-add-mode 'json-jq 'json-mode)
-  (flycheck-add-mode 'typescript-tslint 'astro-ts-mode)
+  (setq flycheck-disabled-checkers '(javascript-eslint javascript-jshint))
 
-  ;; Increase error threshold for larger projects
-  (setq flycheck-checker-error-threshold 2000)
-  (setq flycheck-eslint-rules-directories '("node_modules")))
+  ;; Use LSP for JavaScript/TypeScript linting
+  (setq-hook! '(js-mode-hook js-jsx-mode-hook js2-mode-hook js2-jsx-mode-hook rjsx-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook web-mode-hook astro-ts-mode-hook) flycheck-checker nil))
+
+;; Ensure LSP provides diagnostics
+(after! lsp-mode
+  (setq lsp-diagnostics-provider :flycheck))
 
 ;; Astro-specific hooks and configurations
 (defun my/setup-astro-mode ()
@@ -162,37 +159,21 @@
       :localleader
       (:when (string-match "\\.astro\\'" (or buffer-file-name ""))
         (:prefix ("a" . "astro")
-                  "f" #'format-all-buffer
-                  "l" #'lsp-format-buffer
-                  "r" #'lsp-rename
-                  "d" #'lsp-find-definition
-                  "i" #'lsp-organize-imports)))
+                 "f" #'format-all-buffer
+                 "l" #'lsp-format-buffer
+                 "r" #'lsp-rename
+                 "d" #'lsp-find-definition
+                 "i" #'lsp-organize-imports)))
 
 (map! :after astro-ts-mode
       :map astro-ts-mode-map
       :localleader
       (:prefix ("a" . "astro")
-                "f" #'format-all-buffer
-                "l" #'lsp-format-buffer
-                "r" #'lsp-rename
-                "d" #'lsp-find-definition
-                "i" #'lsp-organize-imports))
-
-(after! format
-  ;; First run prettier, then eslint
-  (set-formatter! 'prettier-then-eslint-astro
-    '("sh" "-c"
-      (format "npx prettier --stdin-filepath %s | npx eslint --stdin --fix --stdin-filename %s"
-              (or buffer-file-name "input.astro")
-              (or buffer-file-name "input.astro")))
-    :modes '(astro-ts-mode web-mode)
-    :ok-statuses '(0 1))
-
-  (setq-hook! 'astro-ts-mode-hook +format-with 'prettier-then-eslint-astro)
-  (setq-hook! 'web-mode-hook
-    +format-with (when (and buffer-file-name
-                            (string-match "\\.astro\\'" buffer-file-name))
-                   'prettier-then-eslint-astro)))
+               "f" #'format-all-buffer
+               "l" #'lsp-format-buffer
+               "r" #'lsp-rename
+               "d" #'lsp-find-definition
+               "i" #'lsp-organize-imports))
 
 ;;; END ENHANCED ASTRO CONFIGURATION ;;;
 
