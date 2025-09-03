@@ -177,6 +177,23 @@
 
 ;;; END ENHANCED ASTRO CONFIGURATION ;;;
 
+(defun my/eslint-fix-file ()
+  "Run eslint --fix on current file."
+  (interactive)
+  (when buffer-file-name
+    (shell-command (format "npx eslint --fix %s" (shell-quote-argument buffer-file-name)))
+    (revert-buffer t t t)))
+
+(after! typescript-ts-mode
+  (add-hook 'typescript-ts-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook #'my/eslint-fix-file nil t)
+              (setq-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook js-ts-mode-hook) +format-with 'prettier)
+
+              (setq flycheck-disabled-checkers nil)
+              (setq-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook js-ts-mode-hook) flycheck-checker 'javascript-eslint))
+            ))
+
 ;; Tailwindcss LSP (commented out as in original)
 ;; (use-package! lsp-tailwindcss)
 ;; (setq lsp-tailwindcss-major-modes '(rjsx-mode web-mode html-mode css-mode typescript-mode typescript-tsx-mode)
