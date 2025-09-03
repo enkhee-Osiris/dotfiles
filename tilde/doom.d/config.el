@@ -63,16 +63,13 @@
                "f" #'racer-find-definition-other-frame
                "w" #'racer-find-definition-other-window))
 
-;;; ENHANCED ASTRO CONFIGURATION ;;;
-
-;; Astro file association - improved fallback handling
+;; Fallback: open .astro in web-mode
 (add-to-list 'auto-mode-alist '("\\.astro\\'" . web-mode))
 
-;; Override with astro-ts-mode if available
+;; ;; Prefer astro-ts-mode if available
 (when (locate-library "astro-ts-mode")
   (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode)))
 
-;; Enhanced web-mode configuration for Astro
 (after! web-mode
   (setq web-mode-engines-alist
         '(("astro" . "\\.astro\\'")))
@@ -92,7 +89,6 @@
   (add-to-list 'lsp-language-id-configuration '(web-mode . "astro"))
   (add-to-list 'lsp-language-id-configuration '(astro-ts-mode . "astro"))
 
-  ;; Enhanced Astro LSP client with TypeScript SDK support
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("astro-ls" "--stdio"))
@@ -109,9 +105,25 @@
   (lsp-ignore-node-files)
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.astro\\'"))
 
-;; Enhanced tree-sitter support
 (after! tree-sitter
-  (add-to-list 'tree-sitter-major-mode-language-alist '(astro-ts-mode . tsx)))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(astro-ts-mode . tsx))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(js-json-mode . json)))
+
+;; Enhanced tree-sitter support
+(setq treesit-language-source-alist
+      '((astro "https://github.com/virchau13/tree-sitter-astro")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (jsdoc "https://github.com/tree-sitter/tree-sitter-jsdoc" "v0.23.2")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")))
+
+;; Install grammars automatically
+(mapc #'treesit-install-language-grammar '(astro css jsdoc json javascript typescript tsx))
+
+;; Remap web-mode to astro-ts-mode where appropriate
+(add-to-list 'major-mode-remap-alist '(web-mode . astro-ts-mode))
 
 ;; Enhanced Flycheck configuration for Astro
 (after! flycheck
@@ -120,32 +132,12 @@
   (flycheck-add-mode 'javascript-eslint 'astro-ts-mode)
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   (flycheck-add-mode 'javascript-eslint 'js-mode)
+  (flycheck-add-mode 'json-jq 'json-mode)
   (flycheck-add-mode 'typescript-tslint 'astro-ts-mode)
 
   ;; Increase error threshold for larger projects
   (setq flycheck-checker-error-threshold 2000)
   (setq flycheck-eslint-rules-directories '("node_modules")))
-
-;; Enhanced format-all configuration for Astro with Prettier+ESLint
-(after! format-all
-  ;; Remove the old simple prettier formatter for Astro
-  (setq format-all-formatters
-        (assoc-delete-all "Astro" format-all-formatters))
-
-  ;; Add enhanced prettier-eslint formatter for Astro
-  (add-to-list 'format-all-formatters
-               '("Astro" (prettier-eslint
-                          (lambda (executable mode-result)
-                            (when (executable-find "npx")
-                              (list "npx" "eslint" "--stdin" "--fix-dry-run" "--format=json" "--stdin-filename" (buffer-file-name)))))))
-
-  ;; Set format-on-save for Astro files
-  (setq +format-on-save-enabled-modes
-        '(not emacs-lisp-mode sql-mode tex-mode latex-mode org-msg-edit-mode))
-
-  ;; Enable format-all-mode for web development modes
-  (add-hook! (web-mode astro-ts-mode typescript-mode js-mode)
-    (format-all-mode 1)))
 
 ;; Astro-specific hooks and configurations
 (defun my/setup-astro-mode ()
@@ -155,9 +147,7 @@
     (lsp-deferred)
     ;; Set up proper indentation
     (setq-local tab-width 2)
-    (setq-local indent-tabs-mode nil)
-    ;; Enable format on save
-    (add-hook 'before-save-hook 'format-all-buffer nil t)))
+    (setq-local indent-tabs-mode nil)))
 
 ;; Add hooks for both astro-ts-mode and web-mode when editing .astro files
 (add-hook 'astro-ts-mode-hook #'my/setup-astro-mode)
@@ -172,39 +162,37 @@
       :localleader
       (:when (string-match "\\.astro\\'" (or buffer-file-name ""))
         (:prefix ("a" . "astro")
-                 "f" #'format-all-buffer
-                 "l" #'lsp-format-buffer
-                 "r" #'lsp-rename
-                 "d" #'lsp-find-definition
-                 "i" #'lsp-organize-imports)))
+                  "f" #'format-all-buffer
+                  "l" #'lsp-format-buffer
+                  "r" #'lsp-rename
+                  "d" #'lsp-find-definition
+                  "i" #'lsp-organize-imports)))
 
 (map! :after astro-ts-mode
       :map astro-ts-mode-map
       :localleader
       (:prefix ("a" . "astro")
-               "f" #'format-all-buffer
-               "l" #'lsp-format-buffer
-               "r" #'lsp-rename
-               "d" #'lsp-find-definition
-               "i" #'lsp-organize-imports))
+                "f" #'format-all-buffer
+                "l" #'lsp-format-buffer
+                "r" #'lsp-rename
+                "d" #'lsp-find-definition
+                "i" #'lsp-organize-imports))
 
-;; Auto-format imports and fix ESLint issues on save
-(defun my/eslint-fix-and-format ()
-  "Fix ESLint issues and format buffer."
-  (when (and buffer-file-name
-             (or (eq major-mode 'web-mode)
-                 (eq major-mode 'astro-ts-mode)
-                 (eq major-mode 'typescript-mode)
-                 (eq major-mode 'js-mode))
-             (string-match "\\.(astro\\|ts\\|js\\|tsx\\|jsx)\\'" buffer-file-name)
-             (executable-find "npx"))
-    (let ((current-point (point)))
-      (shell-command (concat "npx eslint --fix " (shell-quote-argument buffer-file-name)))
-      (revert-buffer t t t)
-      (goto-char current-point))))
+(after! format
+  ;; First run prettier, then eslint
+  (set-formatter! 'prettier-then-eslint-astro
+    '("sh" "-c"
+      (format "npx prettier --stdin-filepath %s | npx eslint --stdin --fix --stdin-filename %s"
+              (or buffer-file-name "input.astro")
+              (or buffer-file-name "input.astro")))
+    :modes '(astro-ts-mode web-mode)
+    :ok-statuses '(0 1))
 
-;; Optional: Enable auto-fix on save (uncomment if desired)
-;; (add-hook 'before-save-hook #'my/eslint-fix-and-format)
+  (setq-hook! 'astro-ts-mode-hook +format-with 'prettier-then-eslint-astro)
+  (setq-hook! 'web-mode-hook
+    +format-with (when (and buffer-file-name
+                            (string-match "\\.astro\\'" buffer-file-name))
+                   'prettier-then-eslint-astro)))
 
 ;;; END ENHANCED ASTRO CONFIGURATION ;;;
 
