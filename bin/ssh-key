@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# Print public SSH key to clipboard. Generate it if necessary
-
-if [ ! -f ~/.ssh/id_rsa.pub ]; then
-	ssh-keygen -t rsa
-fi
-
-cat ~/.ssh/id_rsa.pub
