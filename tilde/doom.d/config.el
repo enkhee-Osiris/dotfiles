@@ -91,15 +91,21 @@
 
   (lsp-register-client
    (make-lsp-client
-    :new-connection (lsp-stdio-connection '("astro-ls" "--stdio"))
-    :activation-fn (lsp-activate-on "astro")
-    :server-id 'astro-ls
-    :initialization-options
-    (lambda ()
-      (let ((project-root (projectile-project-root)))
-        (when project-root
-          `(:typescript (:tsdk ,(expand-file-name "node_modules/typescript/lib" project-root))))))
-    :major-modes '(astro-ts-mode web-mode)))
+     :new-connection (lsp-stdio-connection '("astro-ls" "--stdio"))
+     :activation-fn (lsp-activate-on "astro")
+     :server-id 'astro-ls
+     :initialization-options
+     (lambda ()
+       (let ((project-root (projectile-project-root)))
+         (when project-root
+           `(:typescript (:tsdk ,(expand-file-name "node_modules/typescript/lib" project-root))))))
+     :initialized-fn
+     (lambda (workspace)
+       ;; Tell server our config changed when buffer saves
+       (with-lsp-workspace workspace
+         (lsp--set-configuration
+           `(:astro (:enable t :typescript (:tsdk ,(expand-file-name "node_modules/typescript/lib" (projectile-project-root))))))))
+     :major-modes '(astro-ts-mode web-mode)))
 
   ;; Ignore additional Astro-related directories
   (lsp-ignore-node-files)
@@ -177,17 +183,9 @@
 
 ;;; END ENHANCED ASTRO CONFIGURATION ;;;
 
-(defun my/eslint-fix-file ()
-  "Run eslint --fix on current file."
-  (interactive)
-  (when buffer-file-name
-    (shell-command (format "npx eslint --fix %s" (shell-quote-argument buffer-file-name)))
-    (revert-buffer t t t)))
-
 (after! typescript-ts-mode
   (add-hook 'typescript-ts-mode-hook
             (lambda ()
-              (add-hook 'before-save-hook #'my/eslint-fix-file nil t)
               (setq-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook js-ts-mode-hook) +format-with 'prettier)
 
               (setq flycheck-disabled-checkers nil)
