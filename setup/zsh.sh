@@ -2,8 +2,14 @@
 
 set -e
 
+# Ask for the administrator password upfront
+sudo -v
+
 # zsh
 brew install zsh
+brew cleanup
+
+# Change default shell to zsh
 zsh_path=$(which zsh)
 grep -Fxq "$zsh_path" /etc/shells || sudo bash -c "echo $zsh_path >> /etc/shells"
 chsh -s "$zsh_path" $USER
