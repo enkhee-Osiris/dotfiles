@@ -2,8 +2,6 @@
 
 Emacs installation guide by **enkhee-Osiris**.
 
----
-
 ## System
 
 ```
@@ -13,7 +11,7 @@ Apple M2 Pro (12 cores)
 macOS Tahoe 26.2 (25C56)
 Xcode 26.2 (17C52)
 
-````
+```
 
 ---
 
@@ -24,7 +22,7 @@ Xcode 26.2 (17C52)
 ```bash
 git clone git@github.com:enkhee-Osiris/build-emacs-for-macos.git
 cd build-emacs-for-macos
-````
+```
 
 ### Install prerequisites
 

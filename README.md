@@ -21,7 +21,7 @@ Prerequisites:
 
 Then run these commands in the terminal:
 
-```
+```bash
 git clone git@github.com:enkhee-osiris/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./setup/stuff.sh
