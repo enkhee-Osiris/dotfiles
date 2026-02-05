@@ -55,8 +55,9 @@ plugins=(
   python
   docker
   docker-compose
-  zsh-eza
+  zsh-autosuggestions
   zsh-syntax-highlighting
+  zsh-eza
 )
 
 source $ZSH/oh-my-zsh.sh
