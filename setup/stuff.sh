@@ -1,41 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
 # Ask for the administrator password upfront
-sudo -v
+if [[ $EUID -ne 0 ]]; then
+  sudo -v
+fi
 
-# Install Homebrew
-command -v brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install Homebrew if not present
+if ! command -v brew >/dev/null 2>&1; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# Make sure we’re using the latest Homebrew
+# Update Homebrew and installed formulae
 brew update
-
-# Upgrade any already-installed formulae
 brew upgrade
 
-# GNU core utilities (those that come with macOS are outdated)
-brew install coreutils
-
-# GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-brew install findutils
-brew install tree
+# Core utilities
+brew install \
+  coreutils \
+  findutils \
+  tree
 
 # Git
-brew install git
-brew install git-delta
+brew install \
+  git \
+  git-delta
 
-# Everything else
-brew install fd
-brew install ripgrep
-brew install fzf
-brew install eza
-brew install bat
-brew install vim
+# CLI tools
+brew install \
+  fd \
+  ripgrep \
+  fzf \
+  eza \
+  bat \
+  vim
 
-# Password store
-brew install pass
-brew install gnupg
-brew install pass-otp
+# Password management
+brew install \
+  pass \
+  gnupg \
+  pass-otp
 
 brew cleanup

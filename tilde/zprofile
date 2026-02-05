@@ -1,13 +1,13 @@
+# ------------------------------------------------------------------------------
+# Homebrew
+# ------------------------------------------------------------------------------
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 if [[ -d /usr/local/bin ]]; then
   PATH="/usr/local/bin:$PATH"
-fi
-
-if [[ -d /opt/homebrew/bin ]]; then
-  PATH="/opt/homebrew/bin:$PATH"
-fi
-
-if [[ -d /opt/homebrew/opt/ruby/bin ]]; then
-  PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 fi
 
 if [[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ]]; then
@@ -18,30 +18,40 @@ if [[ -d /opt/homebrew/opt/findutils/libexec/gnubin ]]; then
   PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
 fi
 
-# if [[ -f /usr/local/bin/npm ]] || [[ -f /opt/homebrew/bin/node ]]; then
-#   export npm_config_prefix=$HOME/.node_modules
-# 
-#   if [[ -d $HOME/.node_modules ]]
-#   then
-#     PATH="$HOME/.node_modules/bin:$PATH"
-#   else
-#     mkdir -p "$HOME/.node_modules"
-#     PATH="$HOME/.node_modules/bin:$PATH"
-#     export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
-#   fi
-# fi
+if [[ -d /opt/homebrew/bin ]]; then
+  PATH="/opt/homebrew/bin:$PATH"
+fi
 
-if [[ -d /opt/homebrew/opt/node@22 ]]; then
+# ------------------------------------------------------------------------------
+# Ruby
+# ------------------------------------------------------------------------------
+
+if [[ -d /opt/homebrew/opt/ruby/bin ]]; then
+  PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+fi
+
+# ------------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------------
+
+if [[ -d /opt/homebrew/opt/python@3.14/libexec/bin ]]; then
+  PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
+fi
+
+# ------------------------------------------------------------------------------
+# Node.js / JS tooling
+# ------------------------------------------------------------------------------
+
+if [[ -d /opt/homebrew/opt/node@22/bin ]]; then
   PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 
-  export npm_config_prefix=$HOME/.node_modules
+  export NPM_PACKAGES="$HOME/.node_modules"
 
-  if [[ -d $HOME/.node_modules ]]; then
-    PATH="$HOME/.node_modules/bin:$PATH"
+  if [[ -d $NPM_PACKAGES/bin ]]; then
+    PATH="$NPM_PACKAGES/bin:$PATH"
   else
-    mkdir -p "$HOME/.node_modules"
-    PATH="$HOME/.node_modules/bin:$PATH"
-    export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
+    mkdir -p "$NPM_PACKAGES/bin"
+    PATH="$NPM_PACKAGES/bin:$PATH"
   fi
 fi
 
@@ -49,85 +59,65 @@ if [[ -d $HOME/.yarn ]]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
 
-if [[ -d $HOME/Library/Android/sdk ]]; then
-  export ANDROID_HOME=$HOME/Library/Android/sdk
-  # [ -d $ANDROID_HOME/tools ] && PATH=$PATH:$ANDROID_HOME/tools
-  # [ -d $ANDROID_HOME/tools/bin ] && PATH=$PATH:$ANDROID_HOME/tools/bin
-  [ -d $ANDROID_HOME/platform-tools ] && PATH=$PATH:$ANDROID_HOME/platform-tools
-  [ -d $ANDROID_HOME/emulator ] && PATH=$PATH:$ANDROID_HOME/emulator
-  if [[ -d $HOME/Library/Android/ndk ]]; then
-    export ANDROID_NDK=$HOME/Library/Android/ndk
-    export ANDROID_NDK_HOME=$HOME/Library/Android/ndk
-  fi
-
-  if [[ -d $ANDROID_HOME/opencv ]]; then
-    export OpenCV_ANDROID_HOME=$HOME/Library/Android/sdk/opencv
-  fi
-fi
-
-if [[ -d /Applications/calibre.app ]]; then
-  PATH="/Applications/calibre.app/Contents/MacOS:$PATH"
-fi
-
-if [[ -d /Applications/Visual\ Studio\ Code.app ]]; then
-  PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
-fi
-
-if [[ -d $HOME/.config/emacs/bin ]]; then
-  PATH="$HOME/.config/emacs/bin:$PATH"
-fi
-
-if [[ -d /opt/homebrew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-
-  if [[ -d /opt/homebrew/opt/python3 ]]; then
-    PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
-    PATH="/opt/homebrew/bin/python3:$PATH"
-  fi
-
-  if [[ -d /opt/homebrew/opt/chruby ]]; then
-    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-    source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-    chruby ruby-3.2.1
-
-    PATH="$HOME/.gem/ruby/3.2.1/bin:$PATH"
-    PATH="$HOME/.rubies/ruby-3.2.1/lib/ruby/gems/3.2.0/bin:$PATH"
-    PATH="$HOME/.rubies/ruby-3.2.1/bin:$PATH"
-  fi
-
-  if [[ -d /opt/homebrew/opt/openjdk@17 ]]; then
-    PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-
-    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
-    export JDK_HOME="/opt/homebrew/opt/openjdk@17"
-    export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
-  fi
-fi
-
 if [[ -d $HOME/Library/pnpm ]]; then
   export PNPM_HOME="$HOME/Library/pnpm"
   PATH="$PNPM_HOME:$PATH"
 fi
 
-if [[ -d $HOME/.android ]]; then
-  export ANDROID_USER_HOME="$HOME/.android"
-  export ANDROID_AVD_HOME="$HOME/.android/avd"
+# ------------------------------------------------------------------------------
+# Java
+# ------------------------------------------------------------------------------
+
+if [[ -d /opt/homebrew/opt/openjdk@17 ]]; then
+  export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+  export JDK_HOME="$JAVA_HOME"
+
+  PATH="$JAVA_HOME/bin:$PATH"
 fi
+
+# ------------------------------------------------------------------------------
+# Android SDK
+# ------------------------------------------------------------------------------
 
 if [[ -d $HOME/Library/Android/sdk ]]; then
-  # export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
-  # export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+  if [[ -d $ANDROID_HOME/platform-tools ]]; then
+    PATH="$PATH:$ANDROID_HOME/platform-tools"
+  fi
+
+  if [[ -d $ANDROID_HOME/emulator ]]; then
+    PATH="$PATH:$ANDROID_HOME/emulator"
+  fi
+
+  if [[ -d $HOME/Library/Android/ndk ]]; then
+    export ANDROID_NDK="$HOME/Library/Android/ndk"
+    export ANDROID_NDK_HOME="$ANDROID_NDK"
+  fi
+
+  if [[ -d $ANDROID_HOME/opencv ]]; then
+    export OpenCV_ANDROID_HOME="$ANDROID_HOME/opencv"
+  fi
 fi
 
+# ------------------------------------------------------------------------------
+# Google Cloud SDK
+# ------------------------------------------------------------------------------
 
-# The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/google-cloud-sdk/path.zsh.inc'; fi
 
-# The next line enables shell command completion for gcloud.
 if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-sdk/completion.zsh.inc'; fi
+
+# ------------------------------------------------------------------------------
+# Emacs & Doom
+# ------------------------------------------------------------------------------
 
 if [[ -d /Applications/Emacs.app ]]; then
   PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+fi
+
+if [[ -d $HOME/.config/emacs/bin ]]; then
+  PATH="$HOME/.config/emacs/bin:$PATH"
 fi
 
 export PATH="$PATH"
