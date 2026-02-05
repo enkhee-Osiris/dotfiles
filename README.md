@@ -11,6 +11,7 @@ Applications list that I use mostly.
 5. [Raycast](https://www.raycast.com/)
 6. [Spotify](https://www.spotify.com/us/download/mac/)
 7. [GPGSuite](https://gpgtools.org/)
+8. [XCode](https://developer.apple.com/download/all/?q=Xcode)
 
 ## Installation
 
