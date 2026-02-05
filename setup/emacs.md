@@ -33,6 +33,20 @@ brew install ruby
 make bootstrap
 ```
 
+Prerequisites for building emacs.
+
+```bash
+brew install gcc
+brew install libgccjit
+brew install automake
+brew install gnutls
+brew install pkg-config
+brew install texinfo
+brew install librsvg
+brew install libxml2
+brew install tree-sitter
+```
+
 ### Build Emacs
 
 ```bash
