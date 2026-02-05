@@ -6,6 +6,10 @@ if [[ -d /opt/homebrew/bin ]]; then
   PATH="/opt/homebrew/bin:$PATH"
 fi
 
+if [[ -d /opt/homebrew/opt/ruby/bin ]]; then
+  PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+fi
+
 if [[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ]]; then
   PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 fi
@@ -27,12 +31,10 @@ fi
 #   fi
 # fi
 
-if [[ -d /opt/homebrew/opt/node@20 ]]; then
-  PATH="/opt/homebrew/opt/node@20/bin:$PATH"
+if [[ -d /opt/homebrew/opt/node@22 ]]; then
+  PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 
   export npm_config_prefix=$HOME/.node_modules
-  export LDFLAGS="-L/opt/homebrew/opt/node@20/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/node@20/include"
 
   if [[ -d $HOME/.node_modules ]]; then
     PATH="$HOME/.node_modules/bin:$PATH"
@@ -123,5 +125,9 @@ if [ -f '/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/google-cloud-sdk/pa
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [[ -d /Applications/Emacs.app ]]; then
+  PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+fi
 
 export PATH="$PATH"
