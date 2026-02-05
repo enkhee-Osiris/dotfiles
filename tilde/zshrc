@@ -17,7 +17,8 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
   export TERM=xterm
 else
-  export EDITOR='emacs'
+  export EDITOR='emacs -nw'
+  export VISUAL='emacs -nw'
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
