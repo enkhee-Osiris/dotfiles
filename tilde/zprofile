@@ -34,8 +34,8 @@ fi
 # Python
 # ------------------------------------------------------------------------------
 
-if [[ -d /opt/homebrew/opt/python@3.14/libexec/bin ]]; then
-  PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
+if [[ -d /opt/homebrew/opt/python@3.12/libexec/bin ]]; then
+  PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
 fi
 
 # ------------------------------------------------------------------------------

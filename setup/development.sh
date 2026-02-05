@@ -12,7 +12,7 @@ fi
 # Versions
 # ------------------------------------------------------------------------------
 
-PYTHON_VERSION="3.14"
+PYTHON_VERSION="3.12"
 NODE_VERSION="22"
 JAVA_VERSION="17"
 
@@ -37,49 +37,66 @@ HOMEBREW_PREFIX="$(brew --prefix)"
 # Python
 # ------------------------------------------------------------------------------
 
-brew install "python@${PYTHON_VERSION}"
+if [[ ! -d "$HOMEBREW_PREFIX/opt/python@${PYTHON_VERSION}" ]]; then
+  brew install "python@${PYTHON_VERSION}"
+fi
 
 PYTHON_BIN="$HOMEBREW_PREFIX/opt/python@${PYTHON_VERSION}/libexec/bin/python${PYTHON_VERSION}"
 
-"$PYTHON_BIN" -m ensurepip --upgrade
-"$PYTHON_BIN" -m pip install --upgrade pip setuptools
+if [[ -x "$PYTHON_BIN" ]]; then
+  "$PYTHON_BIN" -m ensurepip --upgrade
+  "$PYTHON_BIN" -m pip install --upgrade pip setuptools
 
-# Optional system-wide python symlink
-sudo ln -sfn "$PYTHON_BIN" /usr/local/bin/python
+  if [[ -d /usr/local/bin ]]; then
+    sudo ln -sfn "$PYTHON_BIN" /usr/local/bin/python
+  fi
+fi
 
 # ------------------------------------------------------------------------------
 # Node.js
 # ------------------------------------------------------------------------------
 
-brew install "node@${NODE_VERSION}"
+if [[ ! -d "$HOMEBREW_PREFIX/opt/node@${NODE_VERSION}" ]]; then
+  brew install "node@${NODE_VERSION}"
+fi
 
 NODE_BIN="$HOMEBREW_PREFIX/opt/node@${NODE_VERSION}/bin"
 
-# User-level global npm packages
-export NPM_PACKAGES="$HOME/.node_modules"
-mkdir -p "$NPM_PACKAGES"
+if [[ -x "$NODE_BIN/npm" ]]; then
+  export NPM_PACKAGES="$HOME/.node_modules"
+  mkdir -p "$NPM_PACKAGES"
 
-"$NODE_BIN/npm" install -g npm
+  "$NODE_BIN/npm" install -g npm
+fi
 
 # ------------------------------------------------------------------------------
 # Ruby
 # ------------------------------------------------------------------------------
 
-brew install ruby
+if [[ ! -d "$HOMEBREW_PREFIX/opt/ruby" ]]; then
+  brew install ruby
+fi
 
-RUBY_BIN="$HOMEBREW_PREFIX/opt/ruby/bin"
+RUBY_GEM="$HOMEBREW_PREFIX/opt/ruby/bin/gem"
 
-"$RUBY_BIN/gem" install cocoapods
+if [[ -x "$RUBY_GEM" ]]; then
+  "$RUBY_GEM" install cocoapods
+fi
 
 # ------------------------------------------------------------------------------
 # Java
 # ------------------------------------------------------------------------------
 
-brew install "openjdk@${JAVA_VERSION}"
+if [[ ! -d "$HOMEBREW_PREFIX/opt/openjdk@${JAVA_VERSION}" ]]; then
+  brew install "openjdk@${JAVA_VERSION}"
+fi
 
-sudo ln -sfn \
-  "$HOMEBREW_PREFIX/opt/openjdk@${JAVA_VERSION}/libexec/openjdk.jdk" \
-  "/Library/Java/JavaVirtualMachines/openjdk-${JAVA_VERSION}.jdk"
+JDK_SOURCE="$HOMEBREW_PREFIX/opt/openjdk@${JAVA_VERSION}/libexec/openjdk.jdk"
+JDK_TARGET="/Library/Java/JavaVirtualMachines/openjdk-${JAVA_VERSION}.jdk"
+
+if [[ -d "$JDK_SOURCE" ]]; then
+  sudo ln -sfn "$JDK_SOURCE" "$JDK_TARGET"
+fi
 
 # ------------------------------------------------------------------------------
 # Cleanup
