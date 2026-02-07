@@ -32,11 +32,8 @@ Clone the repository and run the setup scripts:
 ```bash
 git clone git@github.com:enkhee-osiris/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./setup/stuff.sh
-./setup/zsh.sh
+./init.sh
 ```
-
-> ⚠️ `stuff.sh` installs general tools, and `zsh.sh` sets up Zsh with your preferred configuration.
 
 ---
 
