@@ -34,7 +34,7 @@ git clone git@github.com:enkhee-osiris/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./setup/stuff.sh
 ./setup/zsh.sh
-````
+```
 
 > ⚠️ `stuff.sh` installs general tools, and `zsh.sh` sets up Zsh with your preferred configuration.
 
