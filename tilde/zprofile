@@ -114,6 +114,7 @@ if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-
 
 if [[ -d /Applications/Emacs.app ]]; then
   PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+  alias emacs="emacs -nw"
 fi
 
 if [[ -d $HOME/.config/emacs/bin ]]; then

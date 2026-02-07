@@ -61,8 +61,9 @@ window-padding-x = 10
 window-padding-y = 10
 macos-titlebar-style = hidden
 macos-titlebar-proxy-icon = hidden
+macos-option-as-alt = true
 
-font-family = JetBrainsMono Nerd Font
+font-family = JetBrainsMonoNL Nerd Font Mono
 font-size = 13
 
 scrollback-limit = 10000000
