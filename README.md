@@ -33,6 +33,7 @@ Clone the repository and run the setup scripts:
 git clone git@github.com:enkhee-osiris/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./init.sh
+brew bundle  # Install all Homebrew packages
 ```
 
 ---

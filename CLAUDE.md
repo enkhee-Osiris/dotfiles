@@ -10,6 +10,7 @@ Personal dotfiles for macOS (Apple Silicon). Configs are stored in `tilde/` and 
 
 ```bash
 ./init.sh                  # Symlink all configs to $HOME (backs up existing files as .backup)
+brew bundle                # Install all Homebrew packages from Brewfile
 ./setup/stuff.sh           # Core CLI tools via Homebrew
 ./setup/zsh.sh             # Oh My Zsh + Powerlevel10k + plugins
 ./setup/development.sh     # Python 3.12, Node 22, Java 17, Ruby
