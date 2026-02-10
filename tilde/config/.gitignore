@@ -1,7 +1,9 @@
 */
 !/doom/
 !/ghostty/
+
 !/raycast/
-!/raycast/*
+/raycast/*
 !/raycast/scripts/
+
 !.gitignore
