@@ -10,7 +10,7 @@
       ;;
       ;;
       ;; theme
-      doom-theme 'modus-vivendi
+      doom-theme 'modus-vivendi-tritanopia
       projectile-project-search-path '("~/Work/")
       ;;
       ;;
@@ -57,11 +57,32 @@
 (setq +doom-dashboard-ascii-banner-fn #'my-weebery-is-always-greater)
 ;;; END Customization
 
-(after! treesit
+
+(with-eval-after-load 'treesit
+  (add-to-list 'treesit-language-source-alist
+               '(markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                 "split_parser"
+                 "tree-sitter-markdown/src"))
+  (add-to-list 'treesit-language-source-alist
+               '(markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                 "split_parser"
+                 "tree-sitter-markdown-inline/src"))
   (add-to-list 'treesit-language-source-alist
                '(bash "https://github.com/tree-sitter/tree-sitter-bash"
                  "master"
                  "src")))
+
+;; -------------------------
+;; Eglot (Marksman for Markdown/MDX)
+;; -------------------------
+
+(add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-ts-mode))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(markdown-ts-mode . ("marksman" "server"))))
+
+(add-hook 'markdown-ts-mode-hook #'eglot-ensure)
 
 ;;; Astro / Tree-sitter / Eglot setup
 
@@ -84,16 +105,12 @@
 ;; -------------------------
 ;; Eglot (Astro language server)
 ;; -------------------------
-(after! eglot
+
+(with-eval-after-load 'eglot
   (add-to-list
    'eglot-server-programs
-   `(astro-ts-mode
-     . ("astro-ls" "--stdio"
-        :initializationOptions
-        (:typescript
-         (:tsdk ,(expand-file-name
-                  "node_modules/typescript/lib"
-                  (doom-project-root))))))))
+   '(astro-ts-mode . ("npx" "@astrojs/language-server" "--stdio" :initializationOptions (:typescript (:tsdk "./node_modules/typescript/lib")))))
+  )
 
 (add-hook 'astro-ts-mode-hook #'eglot-ensure)
 
