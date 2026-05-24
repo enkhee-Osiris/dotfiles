@@ -64,7 +64,7 @@ if [[ -d $HOME/.yarn ]]; then
 fi
 
 if [[ -d $HOME/Library/pnpm ]]; then
-  export PNPM_HOME="$HOME/Library/pnpm"
+  export PNPM_HOME="$HOME/Library/pnpm/bin"
   PATH="$PNPM_HOME:$PATH"
 fi
 
@@ -123,6 +123,14 @@ fi
 
 if [[ -d $HOME/.config/emacs/bin ]]; then
   PATH="$HOME/.config/emacs/bin:$PATH"
+fi
+
+if [[ -d /Library/TeX/texbin ]]; then
+  PATH="$PATH:/Library/TeX/texbin"
+fi
+
+if [[ -d $HOME/.opencode ]]; then
+  export PATH="$HOME/.opencode/bin:$PATH"
 fi
 
 export PATH="$PATH"

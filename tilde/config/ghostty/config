@@ -66,4 +66,8 @@ macos-option-as-alt = true
 font-family = JetBrainsMonoNL Nerd Font Mono
 font-size = 13
 
+font-family = "Noto Color Emoji"
+
 scrollback-limit = 10000000
+
+grapheme-width-method = legacy

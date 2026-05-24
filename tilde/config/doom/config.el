@@ -3,6 +3,8 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+(setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin"))
+(add-to-list 'exec-path "/Library/TeX/texbin")
 
 (setq doom-font (font-spec :family "JetBrainsMonoNL Nerd Font Mono" :size 13 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "JetBrainsMonoNL Nerd Font Mono" :size 13)

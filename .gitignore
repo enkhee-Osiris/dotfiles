@@ -6,6 +6,7 @@ Thumbs.db
 tilde/config/*
 !tilde/config/kitty
 !tilde/config/raycast
+!tilde/config/tmux
 
 !tilde/config/spicetify
 tilde/config/spicetify/Backup
