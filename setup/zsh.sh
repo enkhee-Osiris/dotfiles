@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 set -e
 
@@ -39,13 +39,14 @@ if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
 fi
 
 # Plugins
-declare -A plugins=(
+typeset -A plugins
+plugins=(
   [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions"
   [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
   [zsh-eza]="https://github.com/z-shell/zsh-eza.git"
 )
 
-for plugin in "${!plugins[@]}"; do
+for plugin in "${(k)plugins[@]}"; do
   if [[ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]]; then
     git clone "${plugins[$plugin]}" "$ZSH_CUSTOM/plugins/$plugin"
   fi

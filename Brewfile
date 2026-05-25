@@ -43,4 +43,4 @@ brew "black"
 
 # Casks
 cask "gpg-suite"
-cask "mactex-no-gui"
+# cask "mactex-no-gui"
