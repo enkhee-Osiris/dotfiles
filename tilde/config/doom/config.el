@@ -60,6 +60,9 @@
 ;;; END Customization
 
 
+(add-to-list 'exec-path "/Users/enkherdene/go/bin")
+(setenv "PATH" (concat (getenv "PATH") ":/Users/enkherdene/go/bin"))
+
 (with-eval-after-load 'treesit
   (add-to-list 'treesit-language-source-alist
                '(markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
@@ -85,6 +88,16 @@
                '(markdown-ts-mode . ("marksman" "server"))))
 
 (add-hook 'markdown-ts-mode-hook #'eglot-ensure)
+
+(after! eglot
+  (setq-default eglot-workspace-configuration
+                '(:gopls (:usePlaceholders t
+                          :hints (:parameterNames t
+                                  :assignVariableTypes t
+                                  :compositeLiteralFields t
+                                  :functionTypeParameters t
+                                  :rangeVariableTypes t
+                                  :constantValues t)))))
 
 ;;; Astro / Tree-sitter / Eglot setup
 
